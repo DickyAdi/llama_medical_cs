@@ -56,3 +56,11 @@ This project is licensed under the [MIT License](LICENSE) alongside [llama licen
 ## Prompt template modification
 While developing the project, the LLM's tool calling is not really that good. After some research in the internet, i found [this](https://github.com/ollama/ollama/issues/6127#issuecomment-2264291170)
 
+## Things To-Do in the future
+
+ - ~~Initiate github repo~~
+ - Refactor and make the code look cleaner and easier to work with.
+ - Proper code comment documentation
+ - Docker it!
+ 
+If you have something in mind with this list, feel free to open up an [issue](https://github.com/DickyAdi/llama_medical_cs/issues)
