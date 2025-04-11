@@ -4,7 +4,15 @@ from langgraph.prebuilt import ToolNode
 
 from .node import summarize_conversation, assistant, tools_route, State, tools
 
-def graph_builder():
+def graph_builder() -> StateGraph:
+    """
+    Build and returns a langgraph state machine for the chatbot.
+    
+    This includes assistant response logic, flow, and in-memory checkpointing.
+    
+    Returns:
+        StateGraph: A langgraph state graph.
+    """
     builder = StateGraph(State)
     memory = MemorySaver()
     
@@ -21,5 +29,11 @@ def graph_builder():
     return state_graph
 
 def destroy_graph(state_graph):
+    """
+    Delete langgraph state graph.
+    
+    Args:
+        state_graph (StateGraph): A state graph which want to be deleted
+    """
     if state_graph:
         del state_graph

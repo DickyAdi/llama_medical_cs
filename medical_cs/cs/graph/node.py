@@ -15,9 +15,25 @@ llm = ChatOllama(
 llm_with_tools = llm.bind_tools(tools)
 
 class State(MessagesState):
+    """
+    A customised MessagesState by extending langgraph MessagesState.
+    
+    Attributes:
+        summary (str): Summary of previous multiturn conversation (Optional)
+    """
     summary:Optional[str]
 
 def summarize_conversation(state:State):
+    """
+    Create or extend a summary from a multiturn conversation.
+    Summary will be created or extended and the conversation will only be keep from the last 10 newest multiturn conversation.
+    
+    Args:
+        state (State): A state graph State.
+    
+    Returns:
+        dict: A dictionary containing the summary and messages of previous 10 multiturn conversation.
+    """
     summary = state.get('summary', '')
     if summary:
         summary_message = (
@@ -32,6 +48,15 @@ def summarize_conversation(state:State):
     return {'summary' : response.content, 'messages' : delete_messages}
 
 def assistant(state:State):
+    """
+    An assistant node which will be the entry point of the chatbot.
+    
+    Args:
+        state (State): A state graph State.
+        
+    Returns:
+        dict: A dictionary containing the response of the chatbot.
+    """
     summary = state.get('summary', '')
     system_prompt = """
     You are an intelligent assistant designed to answer queries efficiently. You have access to specific tools, but you should only use them when absolutely necessary.  
@@ -47,6 +72,20 @@ def assistant(state:State):
     return {'messages' : [llm_with_tools.invoke(sys_message + state['messages'])]}
 
 def tools_route(state:State, messages_key:str='messages'):
+    """
+    Langgraph state machine routes.
+    This will route the state of the state machine including controlling how many multiturn conversation needs to be summarized.
+    
+    Args:
+        state (State): A state graph state
+        messages_key (str): Name of the messages key in the state. Default is messages.
+    
+    Returns:
+        str: Will return one of below.
+        1. `tools` if there's tool_calls attribute in the state.
+        2. `summarize_conv` if 10 multiturn conversation is reached.
+        3. END if above 2 terms isn't achieved.
+    """
     if isinstance(state, list):
         ai_message = state[-1]
     elif isinstance(state, dict) and (messages := state.get(messages_key, [])):
