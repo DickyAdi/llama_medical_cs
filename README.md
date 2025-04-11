@@ -1,9 +1,4 @@
-# llama_medical_cs
-hospital medical customer service using llama 3.2:3B
-=======
-# Project Title
-
-Llama 3.2:3B Hospital Medical Customer Service
+# Llama 3.2:3B Hospital Medical Customer Service
 
 A chatbot as a customer service in a hospital, while a customer service in a hospital usually doesn't answer a medical question, now with this chatbot, it can. 
 
