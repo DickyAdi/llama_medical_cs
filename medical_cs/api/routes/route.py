@@ -1,8 +1,9 @@
 from langchain_core.messages import HumanMessage
-
-from cs.graph.builder import graph_builder, destroy_graph
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+
+from cs.graph.builder import graph_builder, destroy_graph
+from context.app_context import app_context
 
 class chat_request(BaseModel):
     """
@@ -13,8 +14,21 @@ class chat_request(BaseModel):
     """
     message: str
 
+_state_graph = None #state_graph place holder
 
-state_graph = graph_builder()
+def get_state_graph():
+    """
+    Lazy initialization the state graph.
+    
+    Returns:
+        Object: Langgraph state graph.
+    """
+    global _state_graph
+    if _state_graph is None:
+        app_context.load_resources()
+        _state_graph = graph_builder()
+    return _state_graph
+
 router = APIRouter()
 
 @router.post('/chat')
@@ -34,7 +48,9 @@ async def chat(request: chat_request):
     try:
         config = {'configurable' : {'thread_id' : '1'}}
         messages = [HumanMessage(content=request.message)]
-        response = state_graph.invoke({'messages' : messages}, config)
-        return {'response' : response['messages'][-1].content}
+        graph = get_state_graph()
+        response = graph.invoke({'messages' : messages}, config)
+        # return {'response' : response['messages'][-1].content}
+        return {'response' : response['messages']}
     except Exception as e:
         return HTTPException(status_code=500, detail=(str(e)))

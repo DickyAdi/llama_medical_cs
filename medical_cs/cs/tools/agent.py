@@ -20,14 +20,28 @@ def check_schedule(doctor:str) -> str:
     if res[0][0] > 0:
         schedule = exc_query(schedule_query, returnable=True, verbose=False)
         time_shift = format_doctor_shift(schedule)
+        # response_template = """
+        # today is {today} and {doctor} schedule is below.
+        # {shift}
+        # explain the schedule to the user.
+        # Never over complicate things.
+        # If {today} is not listed in the schedule above, then {today} is not available for {doctor}.
+        # """
         response_template = """
-        today is {today}
-        {doctor} schedule is below.
+        You are a helpful hospital customer service chatbot.
+        
+        Today is {today}. Based on the provided schedule for {doctor}, first explain the doctor's weekly schedule, then inform the user of today's availibility. Do not assume anything outside the schedule.
+        
+        Schedule:
         {shift}
-        explain the schedule to the user.
-        the time shift is always valid within the given range above and there is no fully booked.
-        Never over complicate things.
-        If {today} is not listed in the schedule, then {today} is not available.
+        
+        Instructions:
+        1. Start by summarizing and explaining the full weekly schedule clearly and concisely
+        2. Then, describe the doctor's availibility for today ({today}) or the specific time if the user is asking for a specific day.
+        3. Do not say a day is unavailable if it's listed in the schedule.
+        4. Be friendly and clear.
+        5. Remember, you could help the user for their booking if they want.
+        6. Never assume the gender of the doctor, just say the name of the doctor if you refer to the doctor.
         """
         return response_template.format(today=today, doctor=doctor, shift=time_shift)
     else:
@@ -51,13 +65,20 @@ def check_specialist_schedule(specialist:str) -> str:
         schedule = exc_query(schedule_template, returnable=True, verbose=False)
         time_shift = format_specialist_shift(schedule)
         response_template = """
-        today is {today}.
-        {specialist} specialists schedule is below.
+        You are a helpful hospital customer service chatbot.
+        
+        Today is {today}. Based on the provided schedule for {specialist} specialist, first explain the specialist's weekly schedule, then inform the user of today's availability. Do not assume anything outside the schedule.
+        
+        Schedule:
         {shift}
-        explain the schedule to the user.
-        The time shift is always valid within the given schedule and range above. There is no fully booked.
-        Never over complicate things.
-        if {today} is not listed in the schedule, then {today} is not available.
+        
+        Instructions:
+        1. Start by summarizing and explaining the full weekly schedule clearly and concisely
+        2. Then, describe the specialist's availibility for today ({today}) or the specific time if the user is asking for a specific day.
+        3. Do not say a day is unavailable if it's listed in the schedule.
+        4. Be friendly and clear.
+        5. Remember, you could help the user for their booking if they want.
+        6. Never assume the gender of the doctor, just say the name of the doctor if you refer to the doctor.
         """
         return response_template.format(today=today, specialist=specialist, shift=time_shift)
     else:

@@ -2,7 +2,8 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import ToolNode
 
-from .node import summarize_conversation, assistant, tools_route, State, tools
+from .node import summarize_conversation, assistant, tools_route, State
+from context.app_context import app_context
 
 def graph_builder() -> StateGraph:
     """
@@ -16,9 +17,9 @@ def graph_builder() -> StateGraph:
     builder = StateGraph(State)
     memory = MemorySaver()
     
-    builder.add_node('assistant', assistant)
-    builder.add_node('tools', ToolNode(tools))
-    builder.add_node('summarize_conv', summarize_conversation)
+    builder.add_node('assistant', lambda state: assistant(state, app_context.llm_with_tools, app_context.vector_stores))
+    builder.add_node('tools', ToolNode(app_context.tools))
+    builder.add_node('summarize_conv', lambda state: summarize_conversation(state, app_context.llm_with_tools))
     
     builder.add_edge(START, 'assistant')
     builder.add_conditional_edges('assistant', tools_route)

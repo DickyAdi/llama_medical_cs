@@ -5,14 +5,7 @@ from langchain_core.messages import HumanMessage, SystemMessage, RemoveMessage
 from typing import Optional
 
 from cs.tools import agent
-
-tools = [agent.check_schedule, agent.check_specialist_schedule, agent.validate_booking]
-
-llm = ChatOllama(
-    model="llama3.2:3b-tool",
-    temperature=0
-)
-llm_with_tools = llm.bind_tools(tools)
+from cs.rag.retriever import retrieve_context
 
 class State(MessagesState):
     """
@@ -23,13 +16,14 @@ class State(MessagesState):
     """
     summary:Optional[str]
 
-def summarize_conversation(state:State):
+def summarize_conversation(state:State, llm_with_tools):
     """
     Create or extend a summary from a multiturn conversation.
     Summary will be created or extended and the conversation will only be keep from the last 10 newest multiturn conversation.
     
     Args:
         state (State): A state graph State.
+        llm_with_tools: Ollama LLM instance.
     
     Returns:
         dict: A dictionary containing the summary and messages of previous 10 multiturn conversation.
@@ -47,24 +41,30 @@ def summarize_conversation(state:State):
     delete_messages = [RemoveMessage(id=m.id) for m in state['messages'][:-10]]
     return {'summary' : response.content, 'messages' : delete_messages}
 
-def assistant(state:State):
+def assistant(state:State, llm_with_tools, vector_store):
     """
     An assistant node which will be the entry point of the chatbot.
     
     Args:
         state (State): A state graph State.
+        llm_with_tools: Ollama LLM instance.
         
     Returns:
         dict: A dictionary containing the response of the chatbot.
     """
     summary = state.get('summary', '')
+    rag_context = retrieve_context(state['messages'][-1].content, vector_store)
     system_prompt = """
     You are an intelligent assistant designed to answer queries efficiently. You have access to specific tools, but you should only use them when absolutely necessary.  
 
     Before calling a tool, evaluate the user's query carefully. If you can provide a complete and accurate response using your own reasoning and knowledge, do so without invoking any tools. If there's an error when calling a tool and its not related to user input, just ignore it without saying the error to the user.
 
-    Your priority is to deliver precise and well-reasoned answers while minimizing unnecessary tool usage.  
-    """
+    Your priority is to deliver precise and well-reasoned answers while minimizing unnecessary tool usage.
+    
+    If you're unsure or the user's question cannot be answered from your own reasoning and knowledge, you may refer to the additional context below.
+    
+    {context}
+    """.format(context=rag_context)
     if summary:
         summary_sentence = f"\nSummary of conversation earlier: {summary}"
         system_prompt += summary_sentence

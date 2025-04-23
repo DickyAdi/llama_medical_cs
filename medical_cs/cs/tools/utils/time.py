@@ -35,7 +35,7 @@ def format_specialist_shift(schedule) -> List[str]:
     Returns:
         list: A list of formatted string.
     """
-    return [f"doctor name : {name}, day of shift : {day}, starting at {format_timedelta(start_shift)} through {format_timedelta(end_shift)}" for name, day, start_shift, end_shift in schedule]
+    return '\n'.join([f"* doctor name : {name}, day of shift : {day}, starting at {format_timedelta(start_shift)} through {format_timedelta(end_shift)}" for name, day, start_shift, end_shift in schedule])
 
 def format_doctor_shift(schedule) -> List[str]:
     """
@@ -47,5 +47,5 @@ def format_doctor_shift(schedule) -> List[str]:
     Returns:
         list: A list of formatted string.
     """
-    return [f"day : {day}, shift : starting at {format_timedelta(start)} through {format_timedelta(end)}" for day, start, end in schedule]
+    return '\n'.join([f"* day : {day}, shift : starting at {format_timedelta(start)} through {format_timedelta(end)}" for day, start, end in schedule])
 
