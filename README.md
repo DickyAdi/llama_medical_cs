@@ -44,9 +44,7 @@ This project is developed in a cloud vm as it requires an LLM backend which depe
 Suppose the project is on in `http://localhost:8000`, you can hit the API by making a curl request or using your API testing platform (Postman or etc).
 
 ```
-curl -X POST http://localhost:8000/chat
--H "Content-Type: application/json"
--d '{"message" : "Whats the schedule of oncologist?"}'
+curl -X POST http://localhost:8000/chat -H "Content-Type: application/json" -d '{"message" : "Whats the schedule of oncologist?"}'
 ```
 
 ## Authors
@@ -71,7 +69,9 @@ While developing the project, llama 3.2:3B's tool calling is not really that goo
 - ~~Initiate github repo.~~
 - ~~Refactor and make the code look cleaner and easier to work with.~~
 - ~~Proper code comment documentation.~~
-- RAG to be more valid in the medical knowledge.
+- ~~RAG to be more valid in the medical knowledge.~~
+- Explore RAG!
+- Testing time zzzzzzz
 - Docker it!
 
 If you have something in mind with this list, feel free to open up an [issue](https://github.com/DickyAdi/llama_medical_cs/issues).
