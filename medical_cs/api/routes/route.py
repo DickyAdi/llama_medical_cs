@@ -50,7 +50,6 @@ async def chat(request: chat_request):
         messages = [HumanMessage(content=request.message)]
         graph = get_state_graph()
         response = graph.invoke({'messages' : messages}, config)
-        # return {'response' : response['messages'][-1].content}
-        return {'response' : response['messages']}
+        return {'response' : response['messages'][-1].content}
     except Exception as e:
         return HTTPException(status_code=500, detail=(str(e)))
