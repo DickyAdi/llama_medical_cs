@@ -41,7 +41,7 @@ This project is developed in a cloud vm as it requires an LLM backend which depe
 
 ## Docker running
 
-Docker file and compose already included, however it is not tested yet therefore it is not recommended to use. However, feel free to try and if there's an error it would be much appreciated if you open up and [issue](https://github.com/DickyAdi/llama_medical_cs/issues).
+Docker file and compose already included, however it is not tested yet therefore it is not recommended to use. However, feel free to try and if there's an error it would be much appreciated if you open up an [issue](https://github.com/DickyAdi/llama_medical_cs/issues).
 
 ## How to use
 
