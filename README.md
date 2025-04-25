@@ -7,7 +7,7 @@ A chatbot as a customer service in a hospital, while a customer service in a hos
 Simply clone this repo by doing.
 `git clone https://github.com/DickyAdi/llama_medical_cs.git`
 
-### build with
+## build with
 
 - Python 3.11.7
 - Langchain
@@ -16,7 +16,7 @@ Simply clone this repo by doing.
 - Ollama
 - MySQL
 
-### Installing
+## Running (Less recommended approach)
 
 This project is developed in a cloud vm as it requires an LLM backend which dependent on a GPU. Therefore, to fire up this project it might be different in each device you have. However, here i give you how do i set up this project with some of my script.
 
@@ -38,6 +38,10 @@ This project is developed in a cloud vm as it requires an LLM backend which depe
    ```
    this will fire up the fastapi.
 6. project is on! you can go hit the API using curl or API testing platform.
+
+## Docker running
+
+Docker file and compose already included, however it is not tested yet therefore it is not recommended to use. However, feel free to try and if there's an error it would be much appreciated if you open up and [issue](https://github.com/DickyAdi/llama_medical_cs/issues).
 
 ## How to use
 
@@ -71,7 +75,8 @@ While developing the project, llama 3.2:3B's tool calling is not really that goo
 - ~~Proper code comment documentation.~~
 - ~~RAG to be more valid in the medical knowledge.~~
 - ~~Explore RAG!~~
-- Testing time zzzzzzz
-- Docker it!
+- ~~Testing time zzzzzzz~~
+- ~~Docker it!~~
+- Docker container testing
 
 If you have something in mind with this list, feel free to open up an [issue](https://github.com/DickyAdi/llama_medical_cs/issues).
