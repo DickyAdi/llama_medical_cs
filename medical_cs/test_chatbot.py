@@ -15,7 +15,7 @@ app_context.load_resources()
 state_graph = graph_builder()
 
 # Create a message to test
-messages = [HumanMessage(content="What is oncologist specialist schedule?")]
+messages = [HumanMessage(content="What is depression?")]
 
 # Invoke the graph
 config = {"configurable": {"thread_id": "1"}}

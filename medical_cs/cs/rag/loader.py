@@ -1,6 +1,6 @@
 from langchain_community.vectorstores import FAISS
 
-def load_vector_stores(embeddings, path='ollama_nomic_vs'):
+def load_vector_stores(embeddings, path='semantic_ollama_nomic_vs'):
     """
     Load a pre-saved vector stores.
     

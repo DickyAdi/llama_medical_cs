@@ -9,5 +9,5 @@ mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' 
 mysql -u root -p -e "CREATE DATABASE medical_cs;"
 #loading the dummy database
 mysql -u root -p medical_cs < medical_cs_db.sql
-pip install langchain langgraph PyMySQL mysql-connector-python PyMySQL langchain-community faiss-cpu pypdf sentence-transformers 'bitsandbytes==0.45.0' 'accelerate >=0.26.0' langchain-ollama langgraph-prebuilt "fastapi[all]"
+pip install langchain langgraph PyMySQL mysql-connector-python PyMySQL langchain-community faiss-cpu pypdf sentence-transformers 'bitsandbytes==0.45.0' 'accelerate >=0.26.0' langchain-ollama langchain_experimental langgraph-prebuilt "fastapi[all]"
 ollama serve

@@ -70,7 +70,7 @@ While developing the project, llama 3.2:3B's tool calling is not really that goo
 - ~~Refactor and make the code look cleaner and easier to work with.~~
 - ~~Proper code comment documentation.~~
 - ~~RAG to be more valid in the medical knowledge.~~
-- Explore RAG!
+- ~~Explore RAG!~~
 - Testing time zzzzzzz
 - Docker it!
 
