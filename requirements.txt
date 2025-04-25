@@ -1,0 +1,14 @@
+fastapi==0.115.12
+fastapi[all]
+langchain_community==0.3.22
+langchain_core==0.3.56
+langchain_ollama==0.3.2
+langgraph==0.3.34
+mysql-connector-python
+pydantic==2.11.3
+PyMySQL==1.1.1
+python-dotenv==1.1.0
+pypdf
+langchain_experimental
+langgraph-prebuilt
+faiss-cpu
