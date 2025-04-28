@@ -20,28 +20,42 @@ Simply clone this repo by doing.
 
 This project is developed in a cloud vm as it requires an LLM backend which dependent on a GPU. Therefore, to fire up this project it might be different in each device you have. However, here i give you how do i set up this project with some of my script.
 
-1. make sure you already in the root of the project and then run this code below in the terminal. (open the script to see what does it do)
+1. Create your own environment file running this command below in the project terminal
+   ```
+   cp .env.example .env
+   ```
+   Later you might change the value according to your own settings.
+2. make sure you already in the root of the project and then run this code below in the terminal. (open the script to see what does it do)
    ```
    ./database_setup.sh
    ```
-2. after a while, it will asks for a database password 2 times, write `root` unless you have your own password.
-3. after the process finish, it will run ollama backend in the terminal.
-4. open new terminal and run
+3. after a while, it will asks for a database password 2 times, write `root` unless you have your own password.
+4. after the process finish, it will run ollama backend in the terminal.
+5. open new terminal and run
    ```
    ./model_pull.sh
    ```
    this will run llama3.2:3B prompt template modification. ([why?](#prompt-template-modification))
-5. in the same terminal, run
+6. in the same terminal, run
    ```
    cd medical_cs
    fastapi dev main.py
    ```
    this will fire up the fastapi.
-6. project is on! you can go hit the API using curl or API testing platform.
+7. project is on! you can go hit the API using curl or API testing platform.
 
 ## Docker running
 
-Docker file and compose already included, however it is not tested yet therefore it is not recommended to use. However, feel free to try and if there's an error it would be much appreciated if you open up an [issue](https://github.com/DickyAdi/llama_medical_cs/issues).
+Docker file and compose already included. However it is not tested yet, feel free to try and if there's an error it would be much appreciated if you open up an [issue](https://github.com/DickyAdi/llama_medical_cs/issues).
+
+To run the project using docker, follow these intructions below.
+
+1. Ensure you already clone the [repository](#getting-started).
+2. Open a terminal in the project then run
+   ```
+   docker-compose up -d
+   ```
+3. Project is on! The API is accessible in port 8000.
 
 ## How to use
 
@@ -77,6 +91,6 @@ While developing the project, llama 3.2:3B's tool calling is not really that goo
 - ~~Explore RAG!~~
 - ~~Testing time zzzzzzz~~
 - ~~Docker it!~~
-- Docker container testing
+- _Docker container testing (not available)_
 
 If you have something in mind with this list, feel free to open up an [issue](https://github.com/DickyAdi/llama_medical_cs/issues).
